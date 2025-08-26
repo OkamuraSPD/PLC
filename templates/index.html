@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="cs">
+<head>
+  <meta charset="UTF-8">
+  <title>PLC Pin Layout</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+  <header>
+    <h1>PinMaster</h1>
+    <div id="timer">00:00</div>
+  </header>
+  <div class="container">
+    <div class="panel panel-small">
+      <div class="block_start"></div><div class="block_start"></div><div class="block_start"></div>
+    </div>
+
+    <div class="right-panels">
+      <div class="panel panel-tall-1">
+        <div class="blockl" id="id1"></div><div class="block" id="id2"></div>
+        <div class="blockl" id="id3"></div><div class="block" id="id4"></div>
+        <div class="blockl" id="id5"></div><div class="block" id="id6"></div>
+        <div class="blockl" id="id7"></div><div class="block" id="id8"></div>
+        <div class="blockl" id="id9"></div><div class="block" id="id10"></div>
+        <div class="blockl" id="id11"></div><div class="block" id="id12"></div>
+        <div class="blockl" id="id13"></div><div class="block" id="id14"></div>
+        <div class="blockl" id="id15"></div><div class="block" id="id16"></div>
+
+      </div>
+
+      <div class="panel panel-tall-2">
+        <div class="blockl" id="id17"></div><div class="block" id="id18"></div>
+        <div class="blockl" id="id19"></div><div class="block" id="id20"></div>
+        <div class="blockl" id="id21"></div><div class="block" id="id22"></div>
+        <div class="blockl" id="id23"></div><div class="block" id="id24"></div>
+        <div class="blockl" id="id25"></div><div class="block" id="id26"></div>
+        <div class="blockl" id="id27"></div><div class="block" id="id28"></div>
+        <div class="blockl" id="id29"></div><div class="block" id="id30"></div>
+        <div class="blockl" id="id31"></div><div class="block" id="id32"></div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
+<script>
+  // Nastavení data-id pro všechny .block a .blockl
+  document.querySelectorAll('.block, .blockl').forEach((block, index) => {
+    block.setAttribute('data-id', `Pin ${index + 1}`);
+  });
+
+  // Nastavení data_start-id pro .block_start
+  document.querySelectorAll('.block_start').forEach((block, index) => {
+    block.setAttribute('data_start-id', `Start Pin ${index + 1}`);
+  });
+
+setInterval(async () => {
+  const res = await fetch("/time");
+  if (res.ok) {
+    const data = await res.json();
+    const minutes = String(data.minutes).padStart(2, '0');
+    const seconds = String(data.seconds).padStart(2, '0');
+    document.getElementById("timer").textContent = `${minutes}:${seconds}`;
+  }
+}, 1000);
+
+</script>
+
